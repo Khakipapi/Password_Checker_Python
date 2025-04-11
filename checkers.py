@@ -23,16 +23,13 @@ def get_password_leaks_count(hashes, hash_to_check):
   for h, count in hashes:
     if h == hash_to_check:
       return count
-    return 0
+  return 0
 
 def pwn_check(password):
   # Check if the password has been compromised
   sha1password = hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
   first5_char, tail = sha1password[:5], sha1password[5:]
   response = request_api_data(first5_char)
-  # Check if the tail of the password hash is in the response
-  print(response)
-  print(tail)
   return get_password_leaks_count(response, tail)
 
 def main(arg):
@@ -43,4 +40,5 @@ def main(arg):
     else:
       print(f'{password} was NOT found. Carry on!')
 
-main(sys.argv[1])
+if __name__ == '__main__':
+  sys.exit(main(sys.argv[1]))
