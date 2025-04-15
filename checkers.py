@@ -29,11 +29,11 @@ def pwn_check(password):
   # Check if the password has been compromised
   sha1password = hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
   first5_char, tail = sha1password[:5], sha1password[5:]
-  response = request_api_data(first5_char)
-  return get_password_leaks_count(response, tail)
+  response2 = request_api_data(first5_char)
+  return get_password_leaks_count(response2, tail)
 
-def main(arg):
-  for password in arg:
+def main(args):
+  for password in args:
     count = pwn_check(password)
     if count:
       print(f'{password} was found {count} times... you should probably change your password')
